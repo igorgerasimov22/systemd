@@ -1,0 +1,33 @@
+---
+- name: Install spawn-fcgi php php-cgi php-cli apache2 libapache2-mod-fcgid
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    name:
+      - spawn-fcgi 
+      - php 
+      - php-cgi 
+      - php-cli 
+      - apache2 
+      - libapache2-mod-fcgid
+      
+- name: Copy fcgi.conf to /etc/spawn-fcgi/
+  ansible.builtin.copy:
+    src: ~/systemd/spawn-fcgi/files/fcgi.conf
+    dest: /etc/spawn-fcgi/
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: no
+
+- name: Copy spawn-fcgi.service to /etc/systemd/system/
+  ansible.builtin.copy:
+    src: ~/systemd/spawn-fcgi/files/spawn-fcgi.service
+    dest: /etc/systemd/system/
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+  - Daemon reload
+  - Reboot service

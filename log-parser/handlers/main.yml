@@ -1,0 +1,10 @@
+---
+- name: Daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  
+- name: Reboot timer
+  ansible.builtin.service:
+    name: watchlog.timer
+    enabled: true
+    state: restarted

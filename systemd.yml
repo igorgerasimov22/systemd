@@ -1,0 +1,9 @@
+---
+- name: Configure systemd with ansible
+  hosts: all
+  become: true
+
+  roles:
+  - log-parser
+  - spawn-fcgi
+  - nginx

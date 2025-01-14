@@ -1,0 +1,60 @@
+---
+- name: Copy watchlog file to /etc/default/
+  ansible.builtin.copy:
+    src: ~/systemd/log-parser/files/watchlog
+    dest: /etc/default/
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Reboot service
+
+- name: Copy LOG file to /var/log/
+  ansible.builtin.copy:
+    src: ~/systemd/log-parser/files/watchlog.log
+    dest: /var/log/
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Reboot service
+
+- name: Copy watchlog.sh to /opt/
+  ansible.builtin.copy:
+    src: ~/systemd/log-parser/files/watchlog.sh
+    dest: /opt/
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Reboot service
+
+- name: Copy watchlog.service to /etc/systemd/system/
+  ansible.builtin.copy:
+    src: ~/systemd/log-parser/files/watchlog.service
+    dest: /etc/systemd/system/
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Reboot service
+
+- name: Copy watchlog.timer to /etc/systemd/system/
+  ansible.builtin.copy:
+    src: ~/systemd/log-parser/files/watchlog.timer
+    dest: /etc/systemd/system/
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Reboot service

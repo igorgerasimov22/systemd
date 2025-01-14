@@ -1,0 +1,10 @@
+---
+- name: Daemon reload
+  ansible.builtin.systemd:
+    daemon_reload: true
+  
+- name: Reboot service
+  ansible.builtin.service:
+    name: spawn-fcgi.service
+    enabled: true
+    state: restarted

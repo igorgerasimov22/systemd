@@ -1,0 +1,49 @@
+---
+- name: Install nginx
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+    name:
+      - nginx
+
+- name: Copy nginx@.service to /etc/systemd/system/
+  ansible.builtin.copy:
+    src: ~/systemd/nginx/files/nginx@.service
+    dest: /etc/systemd/system/
+    mode: 0755
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Restart nginx.service
+    - Restart nginx@first
+    - Restart nginx@second
+
+- name: Copy nginx-first.conf to /etc/nginx/
+  ansible.builtin.copy:
+    src: ~/systemd/nginx/files/nginx-first.conf
+    dest: /etc/nginx/
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Restart nginx.service
+    - Restart nginx@first
+    - Restart nginx@second
+
+- name: Copy nginx-second.conf to /etc/nginx/
+  ansible.builtin.copy:
+    src: ~/systemd/nginx/files/nginx-second.conf
+    dest: /etc/nginx/
+    mode: 0644
+    owner: root
+    group: root
+    remote_src: no
+  notify:
+    - Daemon reload
+    - Restart nginx.service
+    - Restart nginx@first
+    - Restart nginx@second
